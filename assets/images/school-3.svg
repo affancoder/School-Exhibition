@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="800" height="600" fill="#E5E7EB"/>
+    <rect x="100" y="100" width="600" height="400" rx="20" fill="#F3F4F6" stroke="#9CA3AF" stroke-width="2"/>
+    <rect x="150" y="150" width="500" height="300" fill="#FEE2E2"/>
+    <path d="M400 200L450 300H350L400 200Z" fill="#EF4444"/>
+    <rect x="375" y="300" width="50" height="100" fill="#DC2626"/>
+    <text x="400" y="450" font-family="Arial" font-size="48" font-weight="bold" text-anchor="middle" fill="#7F1D1D">High School</text>
+</svg>

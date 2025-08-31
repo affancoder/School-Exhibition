@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800" height="600" viewBox="0 0 800 600" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect width="800" height="600" fill="#E5E7EB"/>
+    <rect x="100" y="100" width="600" height="400" rx="20" fill="#F3F4F6" stroke="#9CA3AF" stroke-width="2"/>
+    <rect x="200" y="200" width="400" height="200" fill="#D1D5DB"/>
+    <rect x="220" y="220" width="80" height="40" fill="#9CA3AF"/>
+    <rect x="320" y="220" width="80" height="40" fill="#9CA3AF"/>
+    <rect x="420" y="220" width="80" height="40" fill="#9CA3AF"/>
+    <rect x="520" y="220" width="60" height="40" fill="#9CA3AF"/>
+    <text x="400" y="320" font-family="Arial" font-size="48" font-weight="bold" text-anchor="middle" fill="#4B5563">Elementary School</text>
+</svg>
