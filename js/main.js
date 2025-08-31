@@ -331,16 +331,7 @@ function initSchoolCards() {
             students: 'K-5',
             programs: 'Gifted, Special Needs'
         },
-        {
-            name: 'Mountain View School',
-            location: 'Denver, CO',
-            description: 'Emphasizing outdoor education and environmental stewardship.',
-            image: 'assets/images/events/event-7.jpg',
-            rating: 4.3,
-            type: 'Charter',
-            students: 'K-8',
-            programs: 'Outdoor Education, STEM'
-        }
+        
     ];
     
     // Create school cards
