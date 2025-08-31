@@ -690,6 +690,25 @@ button.button--secondary:hover {
 }
 
 /* Stack pill contents on small screens */
+@media (min-width: 768px) {
+    .nav__list {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+    }
+    
+    .nav__item--cta {
+        margin: 0 0 0 1.5rem;
+        padding: 0;
+        border-top: none;
+    }
+    
+    .nav__item--cta .button {
+        margin-left: 0.5rem;
+        white-space: nowrap;
+    }
+}
+
 @media (max-width: 640px) {
     .hero-ad__info {
         flex-direction: column;
@@ -2098,6 +2117,36 @@ button.button--secondary:hover {
     .nav__item {
         width: 100%;
         text-align: center;
+    }
+    
+    .nav__item--cta {
+        margin: 1rem 0 0;
+        padding: 1rem 0 0;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    .nav__item--cta .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0.5rem 1.25rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        gap: 0.5rem;
+    }
+    
+    .nav__item--cta .button i {
+        font-size: 0.9em;
+        transition: transform 0.2s ease;
+    }
+    
+    .nav__item--cta .button:hover i {
+        transform: scale(1.1);
+    }
+    
+    .nav__item--cta .button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
     }
 
     .nav__link {

@@ -257,8 +257,8 @@ function initSchoolLogos() {
         { src: 'assets/images/logo.svg', alt: 'Premier Schools Exhibition' },
         { src: 'assets/images/exhibition-1.svg', alt: 'Science & Technology' },
         { src: 'assets/images/exhibition-2.svg', alt: 'Arts & Culture' },
-        { src: 'assets/images/football-157930_1280.png', alt: 'Pinecrest Academy' },
-        { src: 'assets/images/graduation-157929_1280.png', alt: 'Hillside School' }
+        // { src: 'assets/images/football-157930_1280.png', alt: 'Pinecrest Academy' },
+        // { src: 'assets/images/graduation-157929_1280.png', alt: 'Hillside School' }
     ];
     
     // Create logo elements
