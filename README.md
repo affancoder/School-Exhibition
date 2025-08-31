@@ -69,3 +69,7 @@ company task/
 
 ---
 Built to showcase a modern animated hero with strong visual hierarchy and easy theming.
+
+## Appreciation
+
+Built with appreciation by MD Affan Asghar.

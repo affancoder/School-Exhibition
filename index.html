@@ -115,7 +115,7 @@
                         <img src="assets/images/events/event-2.jpg" alt="" loading="lazy">
                     </div>
                     <div class="hero-gallery__item shape--arch">
-                        <img src="assets/images/events/event-3.jpg" alt="" loading="lazy">
+                        <img src="assets/images/events/event-6.jpg" alt="" loading="lazy">
                     </div>
                 </div>
                 <div class="hero-gallery__col hero-gallery__col--right">
@@ -129,6 +129,50 @@
                         <img src="assets/images/events/event-1.jpg" alt="" loading="lazy">
                     </div>
                 </div>
+            </div>
+        </section>
+
+        <!-- Trust Stats Section -->
+        <section class="trust-stats" aria-label="Exhibition trust statistics">
+            <div class="container">
+                <ul class="trust-stats__list" role="list">
+                    <li class="trust-stats__item">
+                        <span class="trust-stats__icon" aria-hidden="true">
+                            <svg width="76" height="54" viewBox="0 0 76 54" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                                <path d="M25 50C12 45 6 34 4 24C2 15 6 7 12 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M51 50C64 45 70 34 72 24C74 15 70 7 64 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <p class="trust-stats__text"><span class="trust-stats__muted">Trusted by</span><br><strong>1 Million+</strong> Parents</p>
+                    </li>
+                    <li class="trust-stats__item">
+                        <span class="trust-stats__icon" aria-hidden="true">
+                            <svg width="76" height="54" viewBox="0 0 76 54" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                                <path d="M25 50C12 45 6 34 4 24C2 15 6 7 12 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M51 50C64 45 70 34 72 24C74 15 70 7 64 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <p class="trust-stats__text"><strong>22+ Years</strong><br><span class="trust-stats__muted">of Legacy</span></p>
+                    </li>
+                    <li class="trust-stats__item">
+                        <span class="trust-stats__icon" aria-hidden="true">
+                            <svg width="76" height="54" viewBox="0 0 76 54" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                                <path d="M25 50C12 45 6 34 4 24C2 15 6 7 12 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M51 50C64 45 70 34 72 24C74 15 70 7 64 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <p class="trust-stats__text"><strong>500+</strong><br><span class="trust-stats__muted">Participating Schools</span></p>
+                    </li>
+                    <li class="trust-stats__item">
+                        <span class="trust-stats__icon" aria-hidden="true">
+                            <svg width="76" height="54" viewBox="0 0 76 54" fill="none" xmlns="http://www.w3.org/2000/svg" focusable="false">
+                                <path d="M25 50C12 45 6 34 4 24C2 15 6 7 12 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M51 50C64 45 70 34 72 24C74 15 70 7 64 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </span>
+                        <p class="trust-stats__text"><strong>17 Cities</strong><br><span class="trust-stats__muted">Across the Globe</span></p>
+                    </li>
+                </ul>
             </div>
         </section>
 
@@ -169,37 +213,93 @@
             </div>
         </section>
 
-        <!-- Exhibition Section -->
-        <section class="exhibition" id="exhibition" aria-labelledby="exhibition-heading">
-            <div class="container">
-                <h2 id="exhibition-heading" class="section-title">Featured Exhibitions</h2>
-                <div class="exhibition-slider">
-                    <div class="exhibition-slider__track">
-                        <!-- Exhibition cards will be populated by JavaScript -->
-                        <div class="exhibition-card">
-                            <div class="exhibition-card__image">
-                                <img src="assets/images/events/event-1.jpg" alt="Science Fair 2023" width="400" height="300" loading="lazy">
-                            </div>
-                            <div class="exhibition-card__content">
-                                <h3 class="exhibition-card__title">Science Fair 2023</h3>
-                                <p class="exhibition-card__date">October 15-17, 2023</p>
-                                <p class="exhibition-card__description">Explore innovative projects from our talented students.</p>
-                                <a href="#" class="button button--primary">View Details</a>
-                            </div>
+        <!-- Exhibition Section (Hero Style) -->
+        <section class="exhibition exhibition--hero" id="exhibition" aria-labelledby="exhibition-heading">
+            <div class="container container--wide">
+                <h2 id="exhibition-heading" class="section-title sr-only">Featured Exhibitions</h2>
+
+                <div class="exhibition-hero">
+                    <div class="exhibition-hero__media shape--arch">
+                        <img src="assets/images/events/event-3.jpg" alt="Innovation projects showcase" width="1200" height="800" loading="lazy" decoding="async" fetchpriority="high">
+                        <span class="exhibition-hero__badge">Live Soon</span>
+                    </div>
+                    <div class="exhibition-hero__content">
+                        <p class="eyebrow">Upcoming Highlight</p>
+                        <h3 class="exhibition-hero__title">Science Fair 2023</h3>
+                        <p class="exhibition-hero__meta">October 15–17, 2023 • Apparel House, Gurugram</p>
+                        <p class="exhibition-hero__desc">Explore groundbreaking projects, immersive demos, and hands‑on experiences from our brightest young innovators.</p>
+                        <div class="exhibition-hero__actions">
+                            <a href="#" class="button button--primary">View Details</a>
+                            <a href="#" class="button button--secondary">Register Interest</a>
                         </div>
-                        <!-- More exhibition cards will be added here -->
+                        <ul class="exhibition-hero__stats" role="list">
+                            <li><strong>150+</strong><span>Projects</span></li>
+                            <li><strong>30</strong><span>Schools</span></li>
+                            <li><strong>10</strong><span>Categories</span></li>
+                        </ul>
                     </div>
-                    <div class="exhibition-slider__controls" aria-label="Exhibition slider controls">
-                        <button class="exhibition-slider__control exhibition-slider__control--prev" aria-label="Previous slide">
-                            <span class="visually-hidden">Previous</span>
-                            <span aria-hidden="true">‹</span>
-                        </button>
-                        <div class="exhibition-slider__pagination" aria-label="Slide navigation"></div>
-                        <button class="exhibition-slider__control exhibition-slider__control--next" aria-label="Next slide">
-                            <span class="visually-hidden">Next</span>
-                            <span aria-hidden="true">›</span>
-                        </button>
+                </div>
+
+                <div class="exhibition-rail" aria-label="More exhibitions">
+                    <div class="exhibition-rail__track">
+                        <article class="exhibition-mini">
+                            <img src="assets/images/events/event-2.jpg" alt="Robotics Expo" loading="lazy">
+                            <div class="exhibition-mini__content">
+                                <h4>Robotics Expo</h4>
+                                <p>Nov 12, 2023</p>
+                            </div>
+                        </article>
+                        <article class="exhibition-mini">
+                            <img src="assets/images/events/event-3.jpg" alt="Arts & Crafts Fest" loading="lazy">
+                            <div class="exhibition-mini__content">
+                                <h4>Arts & Crafts Fest</h4>
+                                <p>Dec 2, 2023</p>
+                            </div>
+                        </article>
+                        <article class="exhibition-mini">
+                            <img src="assets/images/events/event-4.jpg" alt="Sports Meet" loading="lazy">
+                            <div class="exhibition-mini__content">
+                                <h4>Sports Meet</h4>
+                                <p>Jan 8, 2024</p>
+                            </div>
+                        </article>
+                        <article class="exhibition-mini">
+                            <img src="assets/images/events/event-5.jpg" alt="Cultural Day" loading="lazy">
+                            <div class="exhibition-mini__content">
+                                <h4>Cultural Day</h4>
+                                <p>Feb 20, 2024</p>
+                            </div>
+                        </article>
+                        <article class="exhibition-mini">
+                            <img src="assets/images/events/event-6.jpg" alt="Science Symposium" loading="lazy">
+                            <div class="exhibition-mini__content">
+                                <h4>Science Symposium</h4>
+                                <p>Mar 10, 2024</p>
+                            </div>
+                        </article>
+                        <article class="exhibition-mini">
+                            <img src="assets/images/events/event-7.jpg" alt="Coding Hackathon" loading="lazy">
+                            <div class="exhibition-mini__content">
+                                <h4>Coding Hackathon</h4>
+                                <p>Apr 5, 2024</p>
+                            </div>
+                        </article>
+                        <article class="exhibition-mini">
+                            <img src="assets/images/events/event-1.jpg" alt="Math Olympiad Finals" loading="lazy">
+                            <div class="exhibition-mini__content">
+                                <h4>Math Olympiad Finals</h4>
+                                <p>May 18, 2024</p>
+                            </div>
+                        </article>
+                        <article class="exhibition-mini">
+                            <img src="assets/images/events/event-3.jpg" alt="Green Energy Expo" loading="lazy">
+                            <div class="exhibition-mini__content">
+                                <h4>Green Energy Expo</h4>
+                                <p>Jun 22, 2024</p>
+                            </div>
+                        </article>
                     </div>
+                    <div class="exhibition-rail__fade" aria-hidden="true"></div>
                 </div>
             </div>
         </section>

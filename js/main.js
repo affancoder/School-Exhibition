@@ -6,6 +6,7 @@ let slidesPerView = 1;
 const navToggle = document.querySelector('.nav__toggle');
 const navMenu = document.querySelector('.nav__list');
 const navLinks = document.querySelectorAll('.nav__link');
+const headerEl = document.querySelector('.header');
 
 // Initialize mobile menu
 function initMobileMenu() {
@@ -14,8 +15,14 @@ function initMobileMenu() {
             const isExpanded = this.getAttribute('aria-expanded') === 'true' || false;
             this.setAttribute('aria-expanded', !isExpanded);
             navMenu.classList.toggle('active');
+            // Reflect menu open state on header for styling
+            if (headerEl) {
+                const open = !isExpanded;
+                headerEl.classList.toggle('header--menu-open', open);
+            }
         });
     }
+
 
     // Close mobile menu when clicking on a nav link
     navLinks.forEach(link => {
@@ -23,8 +30,97 @@ function initMobileMenu() {
             if (navMenu.classList.contains('active')) {
                 navToggle.setAttribute('aria-expanded', 'false');
                 navMenu.classList.remove('active');
+                if (headerEl) {
+                    headerEl.classList.remove('header--menu-open');
+                }
             }
         });
+    });
+}
+
+// Header effects: transparent to solid on scroll
+function initHeaderEffects() {
+    const header = headerEl || document.querySelector('.header');
+    if (!header) return;
+
+    function onScroll() {
+        if (window.scrollY > 10) {
+            header.classList.add('header--scrolled');
+        } else {
+            header.classList.remove('header--scrolled');
+        }
+    }
+
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+}
+
+// Smooth vertical marquee for hero gallery columns
+function initHeroGalleryMarquee() {
+    const gallery = document.querySelector('.hero-gallery');
+    if (!gallery) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reduced.matches) return;
+
+    const cols = Array.from(gallery.querySelectorAll('.hero-gallery__col'));
+    if (!cols.length) return;
+
+    // Prevent double-initialization
+    if (gallery.dataset.marqueeInit === 'true') return;
+    gallery.dataset.marqueeInit = 'true';
+
+    const speeds = [0.25, 0.35, 0.3]; // px per frame per column
+    const directions = [1, 1, 1]; // all columns move upward (bottom -> top)
+
+    const tracks = cols.map((col, i) => {
+        // Ensure any pre-existing CSS animations don't conflict
+        col.style.animation = 'none';
+        // If already has a track, reuse
+        let track = col.querySelector('.hero-gallery__track');
+        if (!track) {
+            track = document.createElement('div');
+            track.className = 'hero-gallery__track';
+            // move all children into track
+            const children = Array.from(col.children);
+            children.forEach(ch => track.appendChild(ch));
+            // duplicate content for seamless loop
+            track.innerHTML += track.innerHTML;
+            col.appendChild(track);
+        }
+
+        // Basic layout styles (avoid extra CSS file edits)
+        track.style.display = 'grid';
+        track.style.gap = getComputedStyle(col).gap || '1.25rem';
+        track.style.willChange = 'transform';
+
+        return {
+            col,
+            track,
+            speed: speeds[i] ?? 0.3,
+            dir: directions[i] ?? 1,
+            offset: 0
+        };
+    });
+
+    let rafId;
+    function step() {
+        tracks.forEach(t => {
+            // Height of one set of items (half, because duplicated)
+            const singleHeight = t.track.scrollHeight / 2;
+            t.offset += t.speed * t.dir;
+            if (t.offset >= singleHeight) t.offset = 0;
+            if (t.offset <= -singleHeight) t.offset = 0;
+            t.track.style.transform = `translateY(${-t.offset}px)`;
+        });
+        rafId = requestAnimationFrame(step);
+    }
+
+    step();
+
+    // Stop animation if user switches to reduced motion
+    reduced.addEventListener?.('change', e => {
+        if (e.matches && rafId) cancelAnimationFrame(rafId);
     });
 }
 
@@ -248,7 +344,14 @@ function initSchoolCards() {
     ];
     
     // Create school cards
-    schoolCardsContainer.innerHTML = schoolData.map(school => `
+    schoolCardsContainer.innerHTML = schoolData.map(school => {
+        const chips = (school.programs || '')
+            .split(',')
+            .map(s => s.trim())
+            .filter(Boolean)
+            .map(txt => `<span class="chip">${txt}</span>`)
+            .join('');
+        return `
         <div class="school-card">
             <div class="school-card__image">
                 <img src="${school.image}" alt="${school.name}" loading="lazy">
@@ -263,6 +366,7 @@ function initSchoolCards() {
                     </span>
                 </div>
                 <p class="school-card__description">${school.description}</p>
+                <div class="school-card__tags" aria-label="Programs">${chips}</div>
                 <div class="school-card__details">
                     <p><strong>Type:</strong> ${school.type}</p>
                     <p><strong>Grades:</strong> ${school.students}</p>
@@ -270,9 +374,72 @@ function initSchoolCards() {
                 </div>
                 <a href="#" class="button button--primary">Learn More</a>
             </div>
-        </div>
-    `).join('');
-    
+        </div>`;
+    }).join('');
+
+    // Enhance interactions: tilt and reveal-on-scroll
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const cards = Array.from(schoolCardsContainer.querySelectorAll('.school-card'));
+
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const idx = Number(entry.target.dataset.idx || 0);
+                entry.target.style.transitionDelay = `${Math.min(idx * 70, 420)}ms`;
+                entry.target.classList.add('is-inview');
+                io.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.15, rootMargin: '0px 0px -10% 0px' });
+
+    cards.forEach((card, i) => { card.dataset.idx = String(i); io.observe(card); });
+
+    // Tilt on hover (skip on touch and reduced motion)
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0;
+    if (!isTouch && !reducedMotion) {
+        const maxTilt = 6; // deg
+        cards.forEach(card => {
+            let rafId;
+            function onMove(e) {
+                const rect = card.getBoundingClientRect();
+                const cx = rect.left + rect.width / 2;
+                const cy = rect.top + rect.height / 2;
+                const dx = (e.clientX - cx) / (rect.width / 2);
+                const dy = (e.clientY - cy) / (rect.height / 2);
+                const ry = Math.max(-1, Math.min(1, dx)) * maxTilt; // rotateY by horizontal
+                const rx = Math.max(-1, Math.min(1, -dy)) * maxTilt; // rotateX by vertical
+                if (rafId) cancelAnimationFrame(rafId);
+                rafId = requestAnimationFrame(() => {
+                    card.style.setProperty('--rx', rx.toFixed(2) + 'deg');
+                    card.style.setProperty('--ry', ry.toFixed(2) + 'deg');
+                    // Glare position (percentages within card)
+                    const mx = ((e.clientX - rect.left) / rect.width) * 100;
+                    const my = ((e.clientY - rect.top) / rect.height) * 100;
+                    card.style.setProperty('--mx', mx.toFixed(2) + '%');
+                    card.style.setProperty('--my', my.toFixed(2) + '%');
+                    // Parallax image translation
+                    const tx = Math.max(-1, Math.min(1, dx)) * 10; // px
+                    const ty = Math.max(-1, Math.min(1, dy)) * 10; // px
+                    card.style.setProperty('--tx', tx.toFixed(1) + 'px');
+                    card.style.setProperty('--ty', ty.toFixed(1) + 'px');
+                });
+            }
+            function resetTilt() {
+                if (rafId) cancelAnimationFrame(rafId);
+                card.style.setProperty('--rx', '0deg');
+                card.style.setProperty('--ry', '0deg');
+                card.style.setProperty('--mx', '50%');
+                card.style.setProperty('--my', '50%');
+                card.style.setProperty('--tx', '0px');
+                card.style.setProperty('--ty', '0px');
+            }
+            card.addEventListener('mousemove', onMove);
+            card.addEventListener('mouseleave', resetTilt);
+            card.addEventListener('focusout', resetTilt);
+        });
+    }
+
     // Initialize mobile slider if needed
     if (window.innerWidth < 1024) {
         initSchoolCardsSlider();
@@ -499,8 +666,10 @@ function init() {
     initHeroSlider();
     initSchoolLogos();
     initSchoolCards();
-    initExhibitionSlider();
     initBackToTop();
+    initHeaderEffects();
+    initHeroGalleryMarquee();
+    initExhibitionRailAutoScroll();
     
     // Add smooth scrolling for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
@@ -572,6 +741,69 @@ function initBackToTop() {
             window.scrollTo(0, 0);
         } else {
             window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    });
+}
+
+// Auto-scroll the exhibition mini-cards rail (no slider controls)
+function initExhibitionRailAutoScroll() {
+    const rail = document.querySelector('.exhibition-rail');
+    const track = document.querySelector('.exhibition-rail__track');
+    if (!rail || !track) return;
+
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (reduced.matches) return;
+
+    // Prevent double initialization
+    if (track.dataset.autoScrollInit === 'true') return;
+    track.dataset.autoScrollInit = 'true';
+
+    // Duplicate once for seamless loop
+    track.innerHTML += track.innerHTML;
+
+    let rafId;
+    let paused = false;
+    const speed = 0.6; // px per frame
+
+    // Cache original scroll-snap setting so we can restore it on pause
+    const originalSnap = getComputedStyle(track).scrollSnapType || '';
+    function disableSnap() {
+        track.style.scrollSnapType = 'none';
+    }
+    function restoreSnap() {
+        // Restore only if there was an original value
+        track.style.scrollSnapType = originalSnap || '';
+    }
+
+    function step() {
+        if (!paused) {
+            // Avoid snap fighting the automated motion
+            disableSnap();
+            track.scrollLeft += speed;
+            const halfWidth = Math.max(0, (track.scrollWidth / 2) - track.clientWidth);
+            if (track.scrollLeft >= halfWidth) {
+                track.scrollLeft = 0;
+            }
+        }
+        rafId = requestAnimationFrame(step);
+    }
+
+    // Pause on hover/focus for accessibility
+    rail.addEventListener('mouseenter', () => { paused = true; restoreSnap(); });
+    rail.addEventListener('mouseleave', () => { paused = false; });
+    rail.addEventListener('focusin', () => { paused = true; restoreSnap(); });
+    rail.addEventListener('focusout', () => { paused = false; });
+
+    // Kick off
+    step();
+
+    // React to reduced motion changes
+    reduced.addEventListener?.('change', e => {
+        if (e.matches && rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = null;
+        } else if (!e.matches && !rafId) {
+            step();
         }
     });
 }
